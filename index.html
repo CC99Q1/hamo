@@ -9,1912 +9,729 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Lalezar&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         :root {
-            --primary-color: #2E4053;
-            --secondary-color: #E74C3C;
-            --accent-color: #8E44AD;
-            --background-color: #F8F9FA;
-            --text-color: #2C3E50;
-            --light-text-color: #ffffff;
-            --gold-color: #F1C40F;
-            --music-color: #9C27B0;
-            --gradient-1: linear-gradient(135deg, #2E4053 0%, #34495E 100%);
-            --gradient-2: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
-            --gradient-3: linear-gradient(135deg, #8E44AD 0%, #732D91 100%);
-            --gradient-gold: linear-gradient(135deg, #F1C40F 0%, #F39C12 100%);
-            --gradient-music: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
-            --gradient-music-light: linear-gradient(135deg, #E1BEE7 0%, #D1C4E9 100%);
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 15px 40px rgba(0, 0, 0, 0.12);
-            --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.15);
-            --glow-blue: 0 0 20px rgba(46, 64, 83, 0.5);
-            --glow-orange: 0 0 20px rgba(231, 76, 60, 0.5);
-            --glow-music: 0 0 30px rgba(156, 39, 176, 0.6);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(46, 64, 83, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(231, 76, 60, 0.05) 0%, transparent 20%);
-            min-height: 100vh;
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .floating-element {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.1;
-            animation: float 20s infinite linear;
-        }
-
-        .floating-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            background: var(--primary-color);
-            top: 10%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .floating-element:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            background: var(--secondary-color);
-            top: 60%;
-            right: 10%;
-            animation-delay: -5s;
-            animation-duration: 25s;
-        }
-
-        .floating-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            background: var(--accent-color);
-            bottom: 10%;
-            left: 15%;
-            animation-delay: -10s;
-            animation-duration: 30s;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* الشريط العلوي المتحرك */
-        .top-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--gradient-2);
-            z-index: 1000;
-            transform-origin: left;
-            animation: expandWidth 2s ease-out;
-        }
-
-        header {
-            text-align: center;
-            padding: 120px 30px 100px;
-            background: var(--gradient-1);
-            color: var(--light-text-color);
-            border-radius: 0 0 40px 40px;
-            box-shadow: var(--shadow-medium);
-            margin-bottom: 60px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInDown 1.5s ease-out;
-        }
-
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(231, 76, 60, 0.1) 0%, transparent 50%);
-            z-index: 0;
-            animation: pulseBackground 10s infinite alternate;
-        }
-
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite alternate;
-        }
-
-        .title-wrapper {
-            display: inline-block;
-            position: relative;
-            animation: bounceIn 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .title-decoration {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            top: -20px;
-            right: -20px;
-            animation: spin 20s infinite linear, pulseBorder 4s infinite;
-        }
-
-        .title-decoration:nth-child(2) {
-            left: -20px;
-            top: auto;
-            bottom: -20px;
-            border-color: rgba(231, 76, 60, 0.3);
-            animation-direction: reverse;
-        }
-
-        .title-decoration:nth-child(3) {
-            right: auto;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border-color: rgba(241, 196, 15, 0.2);
-            animation: spin 30s infinite linear reverse, pulseBorder 5s infinite alternate;
-        }
-
-        header h1 {
-            font-family: 'Lalezar', cursive;
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            font-weight: 400;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-            position: relative;
-            display: inline-block;
-            background: linear-gradient(to right, #fff, #F1C40F, #E74C3C);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textGlow 3s infinite alternate;
-        }
-
-        header h1::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            width: 60%;
-            height: 4px;
-            background: var(--secondary-color);
-            border-radius: 2px;
-            animation: expandWidth 2s ease-out 1s both;
-        }
-
-        header p {
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.7rem;
-            opacity: 0.9;
-            margin-top: 30px;
-            max-width: 700px;
-            margin-right: auto;
-            margin-left: auto;
-            position: relative;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 1.5s ease-out 0.5s both;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.5s ease;
-        }
-
-        header p:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .highlight {
-            color: var(--gold-color);
-            font-weight: 800;
-            position: relative;
-            display: inline-block;
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
-            animation: highlightPulse 2s infinite alternate;
-        }
-
-        .highlight::after {
-            content: "";
-            position: absolute;
-            bottom: 2px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(241, 196, 15, 0.3);
-            z-index: -1;
-        }
-
-        .main-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-        }
-
-        .content-block {
-            background-color: #fff;
-            border-radius: 30px;
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            opacity: 0;
-            transform: translateY(50px) scale(0.95);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .content-block.animated {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .content-block:hover {
-            transform: translateY(-15px) scale(1.03);
-            box-shadow: var(--shadow-strong), var(--glow-blue);
-        }
-
-        .content-block:nth-child(1):hover {
-            box-shadow: var(--shadow-strong), var(--glow-orange);
-        }
-
-        .content-block::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--gradient-2);
-            z-index: 2;
-            transform-origin: left;
-            transform: scaleX(0);
-            transition: transform 0.8s ease;
-        }
-
-        .content-block:hover::before {
-            transform: scaleX(1);
-        }
-
-        .image-container {
-            overflow: hidden;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            position: relative;
-            height: 320px;
-        }
-
-        .image-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.7) 100%);
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .content-block:hover .image-container::before {
-            opacity: 1;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.2s cubic-bezier(0.215, 0.61, 0.355, 1);
-            filter: brightness(0.9);
-        }
-
-        .content-block:hover .image-container img {
-            transform: scale(1.2) rotate(2deg);
-            filter: brightness(1.1);
-        }
-
-        .text-content {
-            padding: 40px;
-            position: relative;
-        }
-
-        .text-content h2 {
-            font-family: 'Lalezar', cursive;
-            font-size: 2.8rem;
-            color: var(--primary-color);
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .text-content h2::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100px;
-            height: 5px;
-            background: var(--gradient-2);
-            border-radius: 3px;
-            animation: slideInRight 1s ease-out 0.5s both;
-        }
-
-        .text-content h2::before {
-            content: "✧";
-            position: absolute;
-            right: -25px;
-            top: 10px;
-            color: var(--gold-color);
-            font-size: 2rem;
-            animation: rotate 10s infinite linear;
-        }
-
-        .text-content p {
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.3rem;
-            color: var(--text-color);
-            line-height: 1.9;
-            margin-bottom: 20px;
-        }
-
-        .quote-container {
-            padding: 50px 40px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-
-        .quote-container::before {
-            content: "“";
-            position: absolute;
-            top: 10px;
-            right: 30px;
-            font-family: 'Lalezar', cursive;
-            font-size: 10rem;
-            color: rgba(46, 64, 83, 0.1);
-            line-height: 1;
-            z-index: 0;
-            animation: fadeIn 2s ease-out;
-        }
-
-        .quote {
-            background: var(--gradient-1);
-            color: var(--light-text-color);
-            padding: 45px 40px;
-            border-radius: 25px;
-            box-shadow: var(--shadow-medium);
-            font-size: 1.9rem;
-            font-weight: 600;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            font-family: 'Cairo', sans-serif;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            overflow: hidden;
-        }
-
-        .quote::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.8s ease;
-            opacity: 0;
-        }
-
-        .quote:hover::before {
-            opacity: 1;
-            animation: shine 1.5s ease;
-        }
-
-        .quote:hover {
-            transform: scale(1.05) translateY(-10px);
-            box-shadow: var(--shadow-strong), var(--glow-blue);
-        }
-
-        .quote span {
-            display: block;
-            font-size: 1.2rem;
-            font-style: italic;
-            opacity: 0.9;
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        /* قسم الموسيقى - التصميم المحسن */
-        .music-section {
-            margin: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .music-container {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
-            backdrop-filter: blur(15px);
-            border-radius: 40px;
-            padding: 60px 40px;
-            box-shadow: var(--shadow-strong), 0 10px 60px rgba(156, 39, 176, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .music-container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 10px;
-            background: var(--gradient-music);
-            z-index: 1;
-        }
-
-        .music-container::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(156, 39, 176, 0.05) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        .music-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .music-header h2 {
-            font-family: 'Lalezar', cursive;
-            font-size: 3.5rem;
-            color: var(--music-color);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-            padding: 0 30px;
-            text-shadow: 2px 2px 8px rgba(156, 39, 176, 0.2);
-        }
-
-        .music-header h2::before, .music-header h2::after {
-            content: "♫";
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 2.5rem;
-            color: var(--secondary-color);
-            animation: musicNote 3s infinite alternate;
-        }
-
-        .music-header h2::before {
-            right: -10px;
-        }
-
-        .music-header h2::after {
-            left: -10px;
-        }
-
-        .music-header p {
-            font-size: 1.4rem;
-            color: var(--text-color);
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .playlist-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: var(--shadow-medium);
-        }
-
-        .playlist-header {
-            padding: 20px;
-            background: var(--gradient-music);
-            color: white;
-            text-align: center;
-            font-family: 'Lalezar', cursive;
-            font-size: 1.8rem;
-        }
-
-        .playlist-tracks {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .track-item {
-            padding: 18px 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .track-item:hover {
-            background: rgba(156, 39, 176, 0.05);
-            transform: translateX(-10px);
-        }
-
-        .track-item.active {
-            background: var(--gradient-music-light);
-            border-right: 5px solid var(--music-color);
-        }
-
-        .track-number {
-            font-size: 1.2rem;
-            color: var(--music-color);
-            font-weight: 700;
-            width: 30px;
-            text-align: center;
-        }
-
-        .track-thumbnail {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .track-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .track-details {
-            flex-grow: 1;
-        }
-
-        .track-details h4 {
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-
-        .track-details p {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-
-        .track-duration {
-            font-size: 0.9rem;
-            color: var(--text-color);
-            opacity: 0.7;
-            padding: 0 10px;
-        }
-
-        .music-player {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .player-main {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 900px;
-            gap: 60px;
-        }
-
-        .album-art {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            border-radius: 25px;
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-            border: 8px solid white;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .album-art:hover {
-            transform: scale(1.05) rotate(3deg);
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.3), var(--glow-music);
-        }
-
-        .album-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1s ease;
-        }
-
-        .album-art:hover img {
-            transform: scale(1.1);
-        }
-
-        .album-art-overlay {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, rgba(156, 39, 176, 0.7), rgba(231, 76, 60, 0.6));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .album-art:hover .album-art-overlay {
-            opacity: 1;
-        }
-
-        .album-art-overlay i {
-            font-size: 5rem;
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        .vinyl-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: black;
-            border-radius: 50%;
-            border: 5px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-
-        .vinyl-ring::before {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-        }
-
-        .player-controls {
-            flex-grow: 1;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid rgba(156, 39, 176, 0.1);
-            min-width: 450px;
-        }
-
-        .track-info {
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .track-title {
-            font-family: 'Lalezar', cursive;
-            font-size: 2.8rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .track-artist {
-            font-size: 1.6rem;
-            color: var(--music-color);
-            font-weight: 600;
-        }
-
-        .track-album {
-            font-size: 1.2rem;
-            color: var(--text-color);
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .progress-area {
-            margin: 30px 0;
-        }
-
-        .progress-bar {
-            height: 10px;
-            width: 100%;
-            background: rgba(156, 39, 176, 0.1);
-            border-radius: 10px;
-            cursor: pointer;
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            width: 0%;
-            background: var(--gradient-music);
-            border-radius: 10px;
-            position: relative;
-            transition: width 0.1s linear;
-        }
-
-        .progress::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 100%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            border: 3px solid var(--music-color);
-            box-shadow: 0 0 10px rgba(156, 39, 176, 0.8);
-        }
-
-        .timer {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1rem;
-            color: var(--text-color);
-            opacity: 0.8;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .control-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: none;
-            background: var(--gradient-music);
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(156, 39, 176, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .control-btn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(0);
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
-        .control-btn:hover::before {
-            transform: scale(1);
-        }
-
-        .control-btn:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 15px 30px rgba(156, 39, 176, 0.4);
-        }
-
-        .control-btn:active {
-            transform: translateY(0) scale(0.95);
-        }
-
-        .play-btn {
-            width: 90px;
-            height: 90px;
-            font-size: 2.5rem;
-            background: var(--gradient-2);
-            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
-        }
-
-        .volume-control {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 30px;
-            justify-content: center;
-        }
-
-        .volume-control i {
-            font-size: 1.5rem;
-            color: var(--music-color);
-        }
-
-        .volume-slider {
-            width: 200px;
-            height: 8px;
-            -webkit-appearance: none;
-            background: rgba(156, 39, 176, 0.1);
-            border-radius: 10px;
-            outline: none;
-        }
-
-        .volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: var(--music-color);
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(156, 39, 176, 0.8);
-        }
-
-        .music-features {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            padding: 25px 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            box-shadow: var(--shadow-soft);
-            transition: all 0.4s ease;
-            min-width: 180px;
-            border: 1px solid rgba(156, 39, 176, 0.1);
-        }
-
-        .feature:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-medium);
-            background: white;
-        }
-
-        .feature i {
-            font-size: 2.5rem;
-            color: var(--music-color);
-            background: var(--gradient-music-light);
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .feature span {
-            font-family: 'Cairo', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-
-        .music-waves {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100px;
-            overflow: hidden;
-            z-index: -1;
-            opacity: 0.2;
-        }
-
-        .wave {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%239c27b0" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-            background-size: cover;
-            animation: waveMove 20s linear infinite;
-        }
-
-        .wave:nth-child(2) {
-            animation-delay: -5s;
-            opacity: 0.5;
-            height: 120px;
-        }
-
-        .wave:nth-child(3) {
-            animation-delay: -10s;
-            opacity: 0.3;
-            height: 80px;
-        }
-
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
-
-        @keyframes musicNote {
-            0% { transform: translateY(-50%) scale(1); }
-            50% { transform: translateY(-50%) scale(1.2); }
-            100% { transform: translateY(-50%) scale(1); }
-        }
-
-        .rotate-album {
-            animation: rotateAlbum 20s infinite linear;
-        }
-
-        @keyframes rotateAlbum {
-            from { transform: scale(1.05) rotate(0deg); }
-            to { transform: scale(1.05) rotate(360deg); }
-        }
-
-        /* أنيميشن تموج الموسيقى */
-        .music-ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(156, 39, 176, 0.2);
-            transform: scale(0);
-            animation: musicRipple 1.5s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes musicRipple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
-        /* قسم وسائط التواصل */
-        .social-section {
-            margin: 60px 0;
-            text-align: center;
-        }
-
-        .social-section h3 {
-            font-family: 'Lalezar', cursive;
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-
-        .social-section h3::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 60%;
-            height: 4px;
-            background: var(--gradient-2);
-            border-radius: 2px;
-            animation: expandWidth 2s ease-out infinite alternate;
-        }
-
-        /* التعديل الرئيسي: جعل أيقونة التلجرام على اليمين والإنستجرام على اليسار */
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 100px; /* زيادة المسافة بين الأيقونات */
-            margin-bottom: 30px;
-            direction: rtl; /* التأكد من أن الاتجاه من اليمين لليسار */
-        }
-
-        /* تنسيق خاص لأيقونة التلجرام (على اليمين) */
-        .telegram-icon {
-            order: 1; /* وضعها أولاً (على اليمين) */
-        }
-
-        /* تنسيق خاص لأيقونة الإنستجرام (على اليسار) */
-        .instagram-icon {
-            order: 2; /* وضعها ثانياً (على اليسار) */
-        }
-
-        .social-icons a {
-            color: var(--primary-color);
-            font-size: 4rem;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: var(--shadow-soft);
-            overflow: hidden;
-        }
-
-        .social-icons a::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: var(--gradient-1);
-            transform: scale(0);
-            transition: transform 0.5s ease;
-            z-index: 0;
-        }
-
-        .social-icons a:hover::before {
-            transform: scale(1);
-        }
-
-        .social-icons a i {
-            position: relative;
-            z-index: 1;
-            transition: all 0.4s ease;
-        }
-
-        .social-icons a:hover {
-            transform: translateY(-15px) scale(1.2) rotate(10deg);
-            box-shadow: var(--shadow-strong), 0 0 30px rgba(46, 64, 83, 0.5);
-        }
-
-        .social-icons a:hover i {
-            color: white;
-            transform: scale(1.2);
-        }
-
-        .telegram-icon:hover {
-            box-shadow: var(--shadow-strong), 0 0 30px rgba(0, 136, 204, 0.7);
-        }
-
-        .instagram-icon:hover {
-            box-shadow: var(--shadow-strong), 0 0 30px rgba(225, 48, 108, 0.7);
-        }
-
-        footer {
-            text-align: center;
-            padding: 70px 20px 50px;
-            color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 40px 40px 0 0;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.08);
-            margin-top: 60px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            border-top: 3px solid var(--secondary-color);
-        }
-
-        footer::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: var(--gradient-1);
-        }
-
-        footer::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.pinimg.com/736x/8d/be/79/8dbe79ef0d6e8b6e97e45a391f8bd6c8.jpg') center/cover;
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        footer .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        footer p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 20px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.4s ease;
-        }
-
-        footer p:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        /* أنيميشنات جديدة */
-        @keyframes expandWidth {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(30px, 40px) rotate(90deg);
-            }
-            50% {
-                transform: translate(0, 80px) rotate(180deg);
-            }
-            75% {
-                transform: translate(-30px, 40px) rotate(270deg);
-            }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0% { 
-                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
-                transform: scale(1);
-            }
-            70% { 
-                box-shadow: 0 0 0 25px rgba(231, 76, 60, 0);
-                transform: scale(1.05);
-            }
-            100% { 
-                box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
-                transform: scale(1);
-            }
-        }
-
-        @keyframes slideInDown {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from { transform: translateY(80px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInRight {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.1); opacity: 1; }
-            70% { transform: scale(0.95); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes rotateSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes textGlow {
-            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
-            100% { text-shadow: 0 0 20px rgba(241, 196, 15, 0.7), 0 0 30px rgba(231, 76, 60, 0.5); }
-        }
-
-        @keyframes pulseBorder {
-            0%, 100% { border-width: 4px; }
-            50% { border-width: 8px; }
-        }
-
-        @keyframes pulseBackground {
-            0% { background-position: 20% 30%, 80% 70%; }
-            100% { background-position: 30% 40%, 70% 60%; }
-        }
-
-        @keyframes highlightPulse {
-            0% { color: var(--gold-color); text-shadow: 0 0 10px rgba(241, 196, 15, 0.3); }
-            100% { color: #FFED4E; text-shadow: 0 0 20px rgba(241, 196, 15, 0.7); }
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* أنيميشنات للتمرير */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(80px);
-            transition: all 1s cubic-bezier(0.215, 0.61, 0.355, 1);
-        }
-
-        .animate-on-scroll.animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* شريط التمرير المخصص */
-        ::-webkit-scrollbar {
-            width: 14px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
-            border-radius: 10px;
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
-        }
-
-        /* استجابة الوسائط */
-        @media (max-width: 1200px) {
-            .container { max-width: 95%; }
-        }
-
-        @media (max-width: 992px) {
-            header { padding: 100px 20px 80px; }
-            header h1 { font-size: 3.5rem; }
-            header p { font-size: 1.5rem; }
-            .text-content h2 { font-size: 2.3rem; }
-            .quote { font-size: 1.6rem; padding: 35px 30px; }
-            .music-header h2 { font-size: 2.8rem; }
-            .track-title { font-size: 2.2rem; }
-            .player-main { flex-direction: column; gap: 40px; }
-            .album-art { width: 250px; height: 250px; }
-            .player-controls { width: 100%; min-width: auto; }
-            .social-icons { gap: 80px; }
-            .social-icons a { font-size: 3.5rem; width: 90px; height: 90px; }
-        }
-
-        @media (max-width: 768px) {
-            header { padding: 80px 15px 60px; border-radius: 0 0 30px 30px; }
-            header h1 { font-size: 2.8rem; }
-            header p { font-size: 1.3rem; }
-            .main-section { grid-template-columns: 1fr; gap: 40px; }
-            .text-content, .quote-container { padding: 30px; }
-            .text-content h2 { font-size: 2rem; }
-            .quote { font-size: 1.4rem; padding: 30px 25px; }
-            .music-container { padding: 40px 25px; }
-            .controls { gap: 20px; }
-            .control-btn { width: 60px; height: 60px; font-size: 1.5rem; }
-            .play-btn { width: 75px; height: 75px; font-size: 2rem; }
-            .music-features { gap: 20px; }
-            .feature { min-width: 150px; padding: 20px; }
-            .social-icons { gap: 60px; }
-            .social-icons a { font-size: 3rem; width: 80px; height: 80px; }
-        }
-
-        @media (max-width: 576px) {
-            .container { padding: 15px; }
-            header { padding: 70px 10px 50px; }
-            header h1 { font-size: 2.3rem; }
-            .text-content h2 { font-size: 1.8rem; }
-            .text-content p, .quote { font-size: 1.1rem; }
-            .music-section { margin: 70px 0; }
-            .music-header h2 { font-size: 2.2rem; }
-            .album-art { width: 220px; height: 220px; }
-            .player-controls { padding: 30px 20px; }
-            .track-title { font-size: 1.8rem; }
-            .track-artist { font-size: 1.3rem; }
-            .feature { min-width: 130px; padding: 15px; }
-            .feature i { width: 60px; height: 60px; font-size: 2rem; }
-            .social-icons { 
-                flex-direction: row; 
-                gap: 40px; 
-                justify-content: center;
-            }
-            .social-icons a { font-size: 2.8rem; width: 75px; height: 75px; }
-            footer p { font-size: 1.1rem; padding: 20px; }
-        }
-
-        @media (max-width: 400px) {
-            header h1 { font-size: 2rem; }
-            .text-content h2 { font-size: 1.6rem; }
-            .album-art { width: 200px; height: 200px; }
-            .social-icons { gap: 30px; }
-            .social-icons a { font-size: 2.5rem; width: 70px; height: 70px; }
+            --primary:    #2E4053;
+            --secondary:  #E74C3C;
+            --bg:         #F4F6F9;
+            --text:       #2C3E50;
+            --white:      #ffffff;
+            --gold:       #F1C40F;
+            --music:      #9C27B0;
+            --grad1:      linear-gradient(135deg,#2E4053,#34495E);
+            --grad2:      linear-gradient(135deg,#E74C3C,#C0392B);
+            --grad-music: linear-gradient(135deg,#9C27B0,#673AB7);
+            --sh-s: 0 6px 20px rgba(0,0,0,.07);
+            --sh-m: 0 14px 38px rgba(0,0,0,.11);
+            --sh-l: 0 22px 55px rgba(0,0,0,.15);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Cairo',sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.8;
+            overflow-x:hidden;
+        }
+
+        /* TOP BAR */
+        .top-bar{position:fixed;top:0;left:0;right:0;height:4px;background:var(--grad2);z-index:1000;}
+
+        /* REVEAL */
+        .reveal{opacity:0;transform:translateY(45px);transition:opacity .7s ease,transform .7s ease;}
+        .reveal.visible{opacity:1;transform:translateY(0);}
+        .reveal-left{opacity:0;transform:translateX(-45px);transition:opacity .7s ease,transform .7s ease;}
+        .reveal-left.visible{opacity:1;transform:translateX(0);}
+        .reveal-right{opacity:0;transform:translateX(45px);transition:opacity .7s ease,transform .7s ease;}
+        .reveal-right.visible{opacity:1;transform:translateX(0);}
+
+        /* HEADER */
+        header{
+            text-align:center;padding:115px 30px 95px;
+            background:var(--grad1);color:var(--white);
+            border-radius:0 0 50px 50px;box-shadow:var(--sh-m);
+            margin-bottom:70px;position:relative;overflow:hidden;
+            animation:fadeDown .9s ease both;
+        }
+        header::before{
+            content:"";position:absolute;inset:0;
+            background:radial-gradient(circle at 15% 25%,rgba(255,255,255,.09) 0%,transparent 45%),
+                        radial-gradient(circle at 85% 75%,rgba(231,76,60,.09) 0%,transparent 45%);
+            pointer-events:none;
+        }
+        .hdr-ring{
+            position:absolute;border-radius:50%;
+            border:2px solid rgba(255,255,255,.08);
+            animation:spinRing 30s linear infinite;
+        }
+        .hdr-ring:nth-child(1){width:320px;height:320px;top:-80px;right:-80px;}
+        .hdr-ring:nth-child(2){width:220px;height:220px;bottom:-60px;left:-60px;animation-direction:reverse;animation-duration:22s;}
+        .hdr-ring:nth-child(3){width:160px;height:160px;top:40%;left:5%;animation-duration:18s;}
+        header h1{
+            font-family:'Lalezar',cursive;font-size:4rem;font-weight:400;
+            display:inline-block;
+            background:linear-gradient(to right,#fff,#F1C40F,#E74C3C);
+            -webkit-background-clip:text;background-clip:text;color:transparent;
+            margin-bottom:20px;position:relative;animation:fadeDown .9s ease .15s both;
+        }
+        header h1::after{
+            content:"";position:absolute;bottom:-10px;right:0;
+            width:55%;height:4px;background:var(--secondary);border-radius:2px;
+            animation:growLine 1s ease .8s both;
+        }
+        header p{
+            font-size:1.55rem;margin-top:30px;max-width:680px;margin-inline:auto;
+            padding:18px 28px;background:rgba(255,255,255,.1);border-radius:20px;
+            border:1px solid rgba(255,255,255,.15);animation:fadeUp .9s ease .3s both;
+        }
+        .highlight{color:var(--gold);font-weight:800;}
+
+        /* CONTAINER */
+        .container{max-width:1200px;margin:0 auto;padding:20px;}
+
+        /* MAIN GRID */
+        .main-section{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:40px;margin-bottom:70px;}
+        .content-block{
+            background:#fff;border-radius:28px;box-shadow:var(--sh-s);
+            overflow:hidden;transition:transform .35s ease,box-shadow .35s ease;
+            will-change:transform;position:relative;
+        }
+        .content-block::after{
+            content:"";position:absolute;top:0;left:0;right:0;height:4px;
+            background:var(--grad2);transform:scaleX(0);transform-origin:right;transition:transform .4s ease;
+        }
+        .content-block:hover::after{transform:scaleX(1);}
+        .content-block:hover{transform:translateY(-10px);box-shadow:var(--sh-l);}
+        .image-container{overflow:hidden;height:300px;}
+        .image-container img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+        .content-block:hover .image-container img{transform:scale(1.07);}
+        .text-content{padding:35px;}
+        .text-content h2{
+            font-family:'Lalezar',cursive;font-size:2.4rem;color:var(--primary);
+            margin-bottom:18px;padding-bottom:14px;position:relative;
+        }
+        .text-content h2::after{
+            content:"";position:absolute;bottom:0;right:0;width:85px;height:4px;
+            background:var(--grad2);border-radius:3px;
+        }
+        .text-content p{font-size:1.15rem;line-height:1.9;margin-bottom:14px;}
+        .quote-container{padding:38px 35px;text-align:center;}
+        .quote{
+            background:var(--grad1);color:var(--white);padding:38px 32px;
+            border-radius:22px;box-shadow:var(--sh-m);font-size:1.65rem;
+            font-weight:600;line-height:1.8;transition:transform .3s ease,box-shadow .3s ease;
+            position:relative;overflow:hidden;
+        }
+        .quote::before{
+            content:"\201C";position:absolute;top:-10px;right:20px;
+            font-size:9rem;color:rgba(255,255,255,.07);font-family:Georgia,serif;line-height:1;
+        }
+        .quote:hover{transform:translateY(-6px);box-shadow:var(--sh-l);}
+        .quote span{display:block;font-size:1.05rem;font-style:italic;opacity:.85;margin-top:14px;}
+
+        /* ══════════════════════════════════════════
+           🎵  MUSIC SECTION  — تصميم جديد كلياً
+        ══════════════════════════════════════════ */
+        .music-section{margin:80px 0;}
+
+        /* الغلاف الكبير الخارجي */
+        .player-card{
+            border-radius:40px;
+            overflow:hidden;
+            box-shadow:0 30px 80px rgba(0,0,0,.25);
+            position:relative;
+            min-height:520px;
+            display:flex;
+        }
+
+        /* خلفية ضبابية من صورة الأغنية */
+        .player-bg{
+            position:absolute;inset:0;
+            background-size:cover;
+            background-position:center;
+            filter:blur(28px) brightness(.45) saturate(1.6);
+            transform:scale(1.1);
+            transition:background-image .8s ease;
+            z-index:0;
+        }
+
+        /* طبقة تعتيم */
+        .player-overlay{
+            position:absolute;inset:0;
+            background:linear-gradient(135deg,rgba(0,0,0,.55) 0%,rgba(80,0,120,.45) 100%);
+            z-index:1;
+        }
+
+        /* المحتوى فوق الخلفية */
+        .player-body{
+            position:relative;z-index:2;
+            width:100%;
+            display:grid;
+            grid-template-columns:320px 1fr;
+            gap:0;
+            align-items:stretch;
+        }
+
+        /* ---- العمود الأيمن: الغلاف ---- */
+        .p-left{
+            padding:45px 35px;
+            display:flex;flex-direction:column;
+            align-items:center;justify-content:center;
+            gap:22px;
+            border-left:1px solid rgba(255,255,255,.1);
+        }
+
+        .vinyl-wrap{
+            position:relative;
+            width:230px;height:230px;
+        }
+
+        /* قرص فينيل خلف الغلاف */
+        .vinyl-disc{
+            position:absolute;
+            top:50%;left:50%;
+            width:250px;height:250px;
+            transform:translate(-50%,-50%);
+            border-radius:50%;
+            background:radial-gradient(circle,#111 18%,#222 19%,#1a1a1a 30%,#2a2a2a 31%,#1a1a1a 45%,#2a2a2a 46%,#1a1a1a 60%,#2a2a2a 61%,#111 100%);
+            box-shadow:0 0 40px rgba(0,0,0,.6);
+            animation:vinylSpin 6s linear infinite paused;
+            z-index:0;
+        }
+        .vinyl-disc.spinning{animation-play-state:running;}
+        .vinyl-disc::before{
+            content:"";position:absolute;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:60px;height:60px;border-radius:50%;
+            background:radial-gradient(circle,#444 30%,#222 100%);
+            box-shadow:0 0 10px rgba(0,0,0,.5);
+        }
+
+        /* صورة الغلاف المربعة */
+        .cover-img{
+            position:absolute;top:50%;left:50%;
+            transform:translate(-50%,-50%);
+            width:180px;height:180px;
+            border-radius:50%;
+            overflow:hidden;
+            border:5px solid rgba(255,255,255,.2);
+            box-shadow:0 0 30px rgba(0,0,0,.5);
+            z-index:1;
+            transition:box-shadow .4s ease;
+        }
+        .cover-img img{width:100%;height:100%;object-fit:cover;}
+        .vinyl-disc.spinning ~ .cover-img,
+        .cover-img.spinning{
+            animation:vinylSpin 6s linear infinite;
+        }
+
+        /* أعمدة الموسيقى */
+        .eq-bars{
+            display:flex;align-items:flex-end;gap:5px;height:36px;
+        }
+        .eq-bars span{
+            display:block;width:5px;border-radius:3px;
+            background:linear-gradient(to top,#E74C3C,#9C27B0);
+            animation:eqBar 1s ease-in-out infinite;
+        }
+        .eq-bars span:nth-child(1){height:40%;animation-delay:0s;}
+        .eq-bars span:nth-child(2){height:80%;animation-delay:.15s;}
+        .eq-bars span:nth-child(3){height:55%;animation-delay:.3s;}
+        .eq-bars span:nth-child(4){height:90%;animation-delay:.45s;}
+        .eq-bars span:nth-child(5){height:65%;animation-delay:.6s;}
+        .eq-bars span:nth-child(6){height:40%;animation-delay:.75s;}
+        .eq-bars.paused span{animation-play-state:paused;}
+
+        /* ---- العمود الأيسر: التحكم ---- */
+        .p-right{
+            padding:45px 40px;
+            display:flex;flex-direction:column;
+            justify-content:center;
+            gap:28px;
+            color:#fff;
+        }
+
+        /* معلومات الأغنية */
+        .song-meta{}
+        .song-title{
+            font-family:'Lalezar',cursive;
+            font-size:2.8rem;
+            color:#fff;
+            line-height:1.2;
+            margin-bottom:6px;
+            text-shadow:0 2px 10px rgba(0,0,0,.4);
+        }
+        .song-artist{
+            font-size:1.3rem;
+            color:rgba(255,255,255,.75);
+            font-weight:600;
+        }
+        .song-album{
+            font-size:1rem;
+            color:rgba(255,255,255,.5);
+            margin-top:4px;
+        }
+
+        /* شريط التقدم */
+        .prog-wrap{display:flex;flex-direction:column;gap:8px;}
+        .prog-bar{
+            height:6px;
+            background:rgba(255,255,255,.2);
+            border-radius:10px;
+            cursor:pointer;
+            position:relative;
+        }
+        .prog-fill{
+            height:100%;width:0%;
+            background:linear-gradient(to left,#E74C3C,#9C27B0);
+            border-radius:10px;
+            transition:width .1s linear;
+            position:relative;
+        }
+        .prog-fill::after{
+            content:"";
+            position:absolute;top:50%;right:-7px;
+            transform:translateY(-50%);
+            width:14px;height:14px;
+            background:#fff;border-radius:50%;
+            box-shadow:0 0 8px rgba(231,76,60,.8);
+            opacity:0;transition:opacity .2s;
+        }
+        .prog-bar:hover .prog-fill::after{opacity:1;}
+        .prog-times{
+            display:flex;justify-content:space-between;
+            font-size:.85rem;color:rgba(255,255,255,.55);
+        }
+
+        /* أزرار التحكم */
+        .p-controls{
+            display:flex;align-items:center;justify-content:center;gap:18px;
+        }
+        .p-btn{
+            width:52px;height:52px;border-radius:50%;border:none;
+            background:rgba(255,255,255,.12);
+            color:#fff;font-size:1.3rem;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;
+            transition:transform .25s ease,background .25s ease,box-shadow .25s ease;
+            backdrop-filter:blur(6px);
+        }
+        .p-btn:hover{
+            transform:translateY(-4px) scale(1.12);
+            background:rgba(255,255,255,.22);
+            box-shadow:0 8px 20px rgba(0,0,0,.3);
+        }
+        .p-btn:active{transform:scale(.92);}
+        .p-btn.play{
+            width:70px;height:70px;font-size:1.9rem;
+            background:linear-gradient(135deg,#E74C3C,#9C27B0);
+            box-shadow:0 10px 28px rgba(231,76,60,.45);
+        }
+        .p-btn.play:hover{
+            box-shadow:0 14px 36px rgba(231,76,60,.6);
+        }
+        .p-btn.on{
+            background:linear-gradient(135deg,#9C27B0,#E74C3C);
+            box-shadow:0 6px 18px rgba(156,39,176,.5);
+        }
+
+        /* الصوت */
+        .vol-row{
+            display:flex;align-items:center;gap:12px;
+        }
+        .vol-row i{font-size:1.1rem;color:rgba(255,255,255,.6);}
+        .vol-range{
+            flex:1;height:5px;-webkit-appearance:none;
+            background:rgba(255,255,255,.2);border-radius:10px;outline:none;cursor:pointer;
+        }
+        .vol-range::-webkit-slider-thumb{
+            -webkit-appearance:none;width:16px;height:16px;
+            border-radius:50%;background:#fff;cursor:pointer;
+            box-shadow:0 0 8px rgba(255,255,255,.5);
+        }
+
+        /* ══════════════════════════
+           PLAYLIST  — أسفل البطاقة
+        ══════════════════════════ */
+        .playlist-panel{
+            position:relative;z-index:2;
+            background:rgba(0,0,0,.35);
+            backdrop-filter:blur(12px);
+            border-top:1px solid rgba(255,255,255,.08);
+        }
+
+        .pl-head{
+            padding:16px 28px;
+            display:flex;align-items:center;gap:10px;
+            color:rgba(255,255,255,.7);
+            font-family:'Lalezar',cursive;
+            font-size:1.4rem;
+            border-bottom:1px solid rgba(255,255,255,.06);
+            cursor:pointer;
+            user-select:none;
+            transition:color .2s;
+        }
+        .pl-head:hover{color:#fff;}
+        .pl-head .pl-arrow{
+            margin-right:auto;
+            transition:transform .3s ease;
+            font-size:1rem;
+        }
+        .pl-head.open .pl-arrow{transform:rotate(180deg);}
+
+        .pl-body{
+            max-height:0;overflow:hidden;
+            transition:max-height .45s cubic-bezier(.4,0,.2,1);
+        }
+        .pl-body.open{max-height:300px;overflow-y:auto;}
+
+        .pl-body::-webkit-scrollbar{width:4px;}
+        .pl-body::-webkit-scrollbar-thumb{background:rgba(156,39,176,.6);border-radius:10px;}
+
+        .pl-item{
+            padding:13px 28px;
+            display:flex;align-items:center;gap:15px;
+            cursor:pointer;
+            transition:background .2s ease;
+            border-bottom:1px solid rgba(255,255,255,.04);
+        }
+        .pl-item:hover{background:rgba(255,255,255,.07);}
+        .pl-item.active{background:rgba(156,39,176,.25);border-right:3px solid #9C27B0;}
+
+        .pl-num{font-size:.95rem;color:rgba(156,39,176,.9);font-weight:700;width:22px;flex-shrink:0;}
+        .pl-thumb{width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+        .pl-thumb img{width:100%;height:100%;object-fit:cover;}
+        .pl-info{flex:1;}
+        .pl-info h4{font-size:1.05rem;color:#fff;margin-bottom:2px;}
+        .pl-info p{font-size:.78rem;color:rgba(255,255,255,.5);}
+        .pl-dur{font-size:.78rem;color:rgba(255,255,255,.4);}
+
+        /* SOCIAL */
+        .social-section{margin:60px 0;text-align:center;}
+        .social-icons{display:flex;justify-content:center;align-items:center;gap:80px;direction:rtl;}
+        .social-icons a{
+            color:var(--primary);font-size:3.2rem;
+            display:flex;align-items:center;justify-content:center;
+            width:88px;height:88px;border-radius:50%;background:#fff;
+            box-shadow:var(--sh-s);transition:transform .3s ease,box-shadow .3s ease,color .3s ease;
+            text-decoration:none;
+        }
+        .social-icons a:hover{transform:translateY(-10px) scale(1.12);}
+        .telegram-icon:hover{color:#0088cc;box-shadow:0 15px 35px rgba(0,136,204,.3);}
+        .instagram-icon:hover{color:#e1306c;box-shadow:0 15px 35px rgba(225,48,108,.3);}
+
+        /* FOOTER */
+        footer{
+            text-align:center;padding:55px 20px 40px;
+            background:rgba(255,255,255,.95);border-radius:40px 40px 0 0;
+            box-shadow:0 -8px 28px rgba(0,0,0,.07);margin-top:60px;
+            border-top:3px solid var(--secondary);
+        }
+        footer p{
+            font-size:1.15rem;max-width:660px;margin:0 auto;padding:20px 25px;
+            background:rgba(255,255,255,.8);border-radius:16px;box-shadow:var(--sh-s);
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar{width:11px;}
+        ::-webkit-scrollbar-track{background:#f1f1f1;}
+        ::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,var(--primary),var(--secondary));border-radius:10px;}
+
+        /* KEYFRAMES */
+        @keyframes fadeDown{from{opacity:0;transform:translateY(-30px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(35px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes growLine{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+        @keyframes spinRing{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+        @keyframes vinylSpin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+        @keyframes eqBar{0%,100%{transform:scaleY(.4);}50%{transform:scaleY(1);}}
+
+        /* RESPONSIVE */
+        @media(max-width:860px){
+            .player-body{grid-template-columns:1fr;}
+            .p-left{border-left:none;border-bottom:1px solid rgba(255,255,255,.1);padding:35px 25px 30px;}
+            .p-right{padding:30px 25px;}
+        }
+        @media(max-width:768px){
+            header{padding:75px 15px 55px;}
+            header h1{font-size:2.6rem;}
+            header p{font-size:1.2rem;}
+            .main-section{grid-template-columns:1fr;gap:30px;}
+            .text-content,.quote-container{padding:25px;}
+            .text-content h2{font-size:2rem;}
+            .quote{font-size:1.4rem;padding:28px 22px;}
+            .vinyl-wrap,.vinyl-disc{width:200px;height:200px;}
+            .cover-img{width:155px;height:155px;}
+            .song-title{font-size:2.2rem;}
+            .p-btn{width:46px;height:46px;font-size:1.2rem;}
+            .p-btn.play{width:62px;height:62px;font-size:1.7rem;}
+            .social-icons{gap:50px;}
+            .social-icons a{font-size:2.8rem;width:80px;height:80px;}
+        }
+        @media(max-width:480px){
+            header h1{font-size:2rem;}
+            .vinyl-wrap,.vinyl-disc{width:175px;height:175px;}
+            .cover-img{width:135px;height:135px;}
+            .song-title{font-size:1.9rem;}
+            .p-controls{gap:12px;}
+            .social-icons{gap:35px;}
+            .social-icons a{font-size:2.5rem;width:72px;height:72px;}
         }
     </style>
 </head>
 <body>
-    <!-- شريط علوي متحرك -->
-    <div class="top-bar"></div>
-    
-    <!-- عناصر عائمة في الخلفية -->
-    <div class="floating-elements">
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
-        <div class="floating-element"></div>
+
+<div class="top-bar"></div>
+<audio id="myAudio" preload="none"></audio>
+
+<!-- HEADER -->
+<header>
+    <div class="hdr-ring"></div><div class="hdr-ring"></div><div class="hdr-ring"></div>
+    <div class="container">
+        <h1>آيأتيك الزمان بمثلي مرتين</h1>
+        <p><span class="highlight">"خسئت انت وزمانك"</span></p>
     </div>
-    
-    <!-- العنصر الصوتي مع الرابط الجديد -->
-    <audio id="myAudio" src="https://k.top4top.io/m_3693rhun11.mp3" preload="auto"></audio>
-    
-    <!-- الرأس -->
-    <header class="animate-on-scroll">
-        <div class="stars" id="starsContainer"></div>
-        <div class="container">
-            <div class="title-wrapper">
-                <div class="title-decoration"></div>
-                <div class="title-decoration"></div>
-                <div class="title-decoration"></div>
-                <h1>آيأتيك الزمان بمثلي مرتين</h1>
-            </div>
-            <p><span class="highlight">"خسئت انت وزمانك"</span> </p>
-        </div>
-    </header>
+</header>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container main-section">
-        <div class="content-block animate-on-scroll">
-            <div class="image-container">
-                <img src="https://j.top4top.io/p_3691ha9c51.jpg" alt="صورة تجسد الإمام علي">
-            </div>
-            <div class="quote-container">
-                <div class="quote">
-                    <span>- العقلُ صديقٌ مُخلص، والجهلُ عدوٌ فاضح</span>
-                </div>
-            </div>
+<!-- MAIN -->
+<div class="container main-section">
+    <div class="content-block reveal-left">
+        <div class="image-container">
+            <img src="https://j.top4top.io/p_3691ha9c51.jpg" alt="صورة تجسد الإمام علي" loading="lazy">
         </div>
-
-        <div class="content-block animate-on-scroll">
-            <div class="image-container">
-                <img src="https://h.top4top.io/p_3691xzy7m1.jpg" alt="رسم يصور الإمام علي">
-            </div>
-            <div class="text-content">
-                <h2>علي بن أبي طالب عليه السلام</h2>
-                <p>
-                    الإمام علي بن أبي طالب، رمز العدالة والحكمة، فارس الإسلام وباب مدينة العلم، جمع بين <span class="highlight">الشجاعة</span> و<span class="highlight">البلاغة</span> و<span class="highlight">الزهد</span>، فكان قدوة خالدة في الإيمان والحق. كان علي (عليه السلام) من أقرب الناس إلى النبي محمد (صلى الله عليه وسلم)، وأول من آمن به من الصبيان. شهد معه كل الغزوات، وكان يُعرف ببطولته وشجاعته التي لا تُضاهى في المعارك. لم تقتصر فضائله على الشجاعة، بل كان يتمتع بعلم غزير وحكمة بالغة، حيث قال عنه النبي (ص): <span class="highlight">"أنا مدينة العلم وعلي بابها"</span>.
-                </p>
-                <p style="margin-top: 20px;">
-                    ترك الإمام علي (ع) تراثاً فكرياً وأدبياً ضخماً من خلال خطبه وكلماته القصار التي جمعت بين بلاغة اللفظ وعمق المعنى، وقد قال في إحدى حكمه الخالدة: <span class="highlight">"الناس أعداء ما جهلوا"</span>، مما يؤكد على مكانة العلم والمعرفة في فكره.
-                </p>
+        <div class="quote-container">
+            <div class="quote">
+                <span>- العقلُ صديقٌ مُخلص، والجهلُ عدوٌ فاضح</span>
             </div>
         </div>
     </div>
-
-    <!-- قسم الموسيقى المحسن -->
-    <section class="music-section animate-on-scroll">
-        <div class="music-waves">
-            <div class="wave"></div>
-            <div class="wave"></div>
-            <div class="wave"></div>
+    <div class="content-block reveal-right">
+        <div class="image-container">
+            <img src="https://h.top4top.io/p_3691xzy7m1.jpg" alt="رسم يصور الإمام علي" loading="lazy">
         </div>
-        
-        <div class="container">
-            <div class="music-container">
-                <div class="music-header">
-                </div>
-                
-                <!-- قائمة التشغيل الجديدة -->
-                <div class="playlist-container">
-                    <div class="playlist-tracks" id="playlistTracks">
-                        <!-- سيتم تعبئة القائمة من خلال JavaScript -->
-                    </div>
-                </div>
-                
-                <div class="music-player">
-                    <div class="player-main">
-                        <div class="album-art" id="albumArt">
-                            <img src="https://h.top4top.io/p_3691xzy7m1.jpg" alt="صورة الأنشودة" id="albumImage">
-                            <div class="album-art-overlay">
-                                <i class="fas fa-music"></i>
-                            </div>
-                            <div class="vinyl-ring"></div>
-                        </div>
-                        
-                        <div class="player-controls">
-                            <div class="track-info">
-                                <h3 class="track-title" id="trackTitle">سيد فاقد الموسوي</h3>
-                                <p class="track-artist" id="trackArtist">ـــــــــــــــــــــــــــــــــــــــــــ</p>
-                                <p class="track-album" id="trackAlbum">من أروع المدائح النبوية</p>
-                            </div>
-                            
-                            <div class="progress-area">
-                                <div class="progress-bar" id="progressBar">
-                                    <div class="progress" id="progress"></div>
-                                </div>
-                                <div class="timer">
-                                    <span id="currentTime">0:00</span>
-                                    <span id="duration">0:00</span>
-                                </div>
-                            </div>
-                            
-                            <div class="controls">
-                                <button class="control-btn" id="prevBtn" title="السابق (⏪)">
-                                    <i class="fas fa-step-backward"></i>
-                                </button>
-                                
-                                <button class="control-btn" id="repeatBtn" title="تكرار">
-                                    <i class="fas fa-redo"></i>
-                                </button>
-                                
-                                <button class="control-btn play-btn" id="playPauseBtn" title="تشغيل / إيقاف (⏸)">
-                                    <i class="fas fa-play" id="playIcon"></i>
-                                </button>
-                                
-                                <button class="control-btn" id="shuffleBtn" title="عشوائي">
-                                    <i class="fas fa-random"></i>
-                                </button>
-                                
-                                <button class="control-btn" id="nextBtn" title="التالي (⏩)">
-                                    <i class="fas fa-step-forward"></i>
-                                </button>
-                            </div>
-                            
-                            <div class="volume-control">
-                                <i class="fas fa-volume-down"></i>
-                                <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider">
-                                <i class="fas fa-volume-up"></i>
-                            </div>
-                   </section>
-    
-    <!-- قسم وسائط التواصل -->
-    <div class="social-section animate-on-scroll">
-        <div class="container">
-            <div class="social-icons">
-                <!-- أيقونة التلجرام على اليمين -->
-                <a href="https://t.me/sppppl" target="_blank" aria-label="Telegram" class="telegram-icon">
-                    <i class="fab fa-telegram-plane"></i>
-                </a>
-                
-                <!-- أيقونة الإنستجرام على اليسار -->
-                <a href="https://www.instagram.com/v.vri" target="_blank" aria-label="Instagram" class="instagram-icon">
-                    <i class="fab fa-instagram"></i>
-                </a>
-            </div>
+        <div class="text-content">
+            <h2>علي بن أبي طالب عليه السلام</h2>
+            <p>
+                الإمام علي بن أبي طالب، رمز العدالة والحكمة، فارس الإسلام وباب مدينة العلم، جمع بين
+                <span class="highlight">الشجاعة</span> و<span class="highlight">البلاغة</span> و<span class="highlight">الزهد</span>،
+                فكان قدوة خالدة في الإيمان والحق. كان علي (عليه السلام) من أقرب الناس إلى النبي محمد (صلى الله عليه وسلم)،
+                وأول من آمن به من الصبيان. شهد معه كل الغزوات، وكان يُعرف ببطولته وشجاعته التي لا تُضاهى في المعارك.
+                لم تقتصر فضائله على الشجاعة، بل كان يتمتع بعلم غزير وحكمة بالغة، حيث قال عنه النبي (ص):
+                <span class="highlight">"أنا مدينة العلم وعلي بابها"</span>.
+            </p>
+            <p>
+                ترك الإمام علي (ع) تراثاً فكرياً وأدبياً ضخماً من خلال خطبه وكلماته القصار، وقد قال في إحدى حكمه الخالدة:
+                <span class="highlight">"الناس أعداء ما جهلوا"</span>.
+            </p>
         </div>
     </div>
-    
-    <!-- التذييل -->
-    <footer class="animate-on-scroll">
-        <div class="container">
-            <p>حتىٰ السين في إسمكِ تدل على السعاده .</p>
-        </div>
-    </footer>
+</div>
 
-    <script>
-        // قائمة التشغيل مع الروابط المقدمة
-        const playlist = [
-            {
-                id: 1,
-                title: "سيد فاقد الموسوي",
-                artist: "ـــــــــــــــــــــــــــــــــــــــــــ",
-                album: "حيدر يصير الوريث ♪",
-                src: "https://k.top4top.io/m_3693rhun11.mp3",
-                image: "https://k.top4top.io/p_36931n8kw1.jpg",
-                duration: "4:32"
-            },
-            {
-                id: 2,
-                title: "باسم الكربلائي",
-                artist: "ـــــــــــــــــــــــــــــــــــــــــــ",
-                album: "ماعندي غير الله ♪",
-                src: "https://k.top4top.io/m_3691qbw9n1.mp3",
-                image: "https://i.top4top.io/p_3693jijcz1.jpg",
-                duration: "5:15"
-            },
-            {
-                id: 3,
-                title: "سيد فاقد الموسوي ",
-                artist: "ـــــــــــــــــــــــــــــــــــــــــــ",
-                album: "لا مسحتو جروح كلبي ♪",
-                src: "https://d.top4top.io/m_3693c0q161.m4a",
-                image: "https://f.top4top.io/p_3693aotoz1.jpg",
-                duration: "6:20"
-            }
-        ];
-        
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-        let isShuffle = false;
-        let isRepeat = false;
-        let audio;
-        
-        // إنشاء النجوم في الخلفية
-        function createStars() {
-            const starsContainer = document.getElementById('starsContainer');
-            if (!starsContainer) return;
-            
-            for (let i = 0; i < 50; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = `${Math.random() * 4 + 2}px`;
-                star.style.height = star.style.width;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.right = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                star.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        // تهيئة قائمة التشغيل
-        function initializePlaylist() {
-            const playlistTracks = document.getElementById('playlistTracks');
-            playlistTracks.innerHTML = '';
-            
-            playlist.forEach((track, index) => {
-                const trackItem = document.createElement('div');
-                trackItem.className = `track-item ${index === currentTrackIndex ? 'active' : ''}`;
-                trackItem.dataset.index = index;
-                
-                trackItem.innerHTML = `
-                    <div class="track-number">${index + 1}</div>
-                    <div class="track-thumbnail">
-                        <img src="${track.image}" alt="${track.title}">
-                    </div>
-                    <div class="track-details">
-                        <h4>${track.title}</h4>
-                        <p>${track.artist}</p>
-                    </div>
-                    <div class="track-duration">${track.duration}</div>
-                `;
-                
-                trackItem.addEventListener('click', () => {
-                    currentTrackIndex = index;
-                    loadTrack(currentTrackIndex);
-                    playTrack();
-                    updatePlaylistUI();
-                });
-                
-                playlistTracks.appendChild(trackItem);
-            });
-        }
-        
-        // تحميل الأغنية
-        function loadTrack(index) {
-            const track = playlist[index];
-            
-            audio.src = track.src;
-            document.getElementById('trackTitle').textContent = track.title;
-            document.getElementById('trackArtist').textContent = track.artist;
-            document.getElementById('trackAlbum').textContent = track.album;
-            document.getElementById('albumImage').src = track.image;
-            
-            // تحديث واجهة المشغل
-            updatePlaylistUI();
-            
-            // عند تحميل البيانات الصوتية
-            audio.addEventListener('loadedmetadata', function() {
-                document.getElementById('duration').textContent = formatTime(audio.duration);
-            });
-        }
-        
-        // تشغيل الأغنية
-        function playTrack() {
-            audio.play();
-            isPlaying = true;
-            document.getElementById('playIcon').classList.remove('fa-play');
-            document.getElementById('playIcon').classList.add('fa-pause');
-            document.getElementById('albumArt').classList.add('rotate-album');
-            createMusicRipple(document.getElementById('playPauseBtn'));
-        }
-        
-        // إيقاف الأغنية
-        function pauseTrack() {
-            audio.pause();
-            isPlaying = false;
-            document.getElementById('playIcon').classList.remove('fa-pause');
-            document.getElementById('playIcon').classList.add('fa-play');
-            document.getElementById('albumArt').classList.remove('rotate-album');
-        }
-        
-        // التالي
-        function nextTrack() {
-            if (isShuffle) {
-                currentTrackIndex = Math.floor(Math.random() * playlist.length);
-            } else {
-                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            }
-            loadTrack(currentTrackIndex);
-            playTrack();
-            createMusicRipple(document.getElementById('nextBtn'));
-        }
-        
-        // السابق
-        function prevTrack() {
-            if (isShuffle) {
-                currentTrackIndex = Math.floor(Math.random() * playlist.length);
-            } else {
-                currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            }
-            loadTrack(currentTrackIndex);
-            playTrack();
-            createMusicRipple(document.getElementById('prevBtn'));
-        }
-        
-        // تحديث واجهة قائمة التشغيل
-        function updatePlaylistUI() {
-            const trackItems = document.querySelectorAll('.track-item');
-            trackItems.forEach((item, index) => {
-                if (index === currentTrackIndex) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        }
-        
-        // تنسيق الوقت
-        function formatTime(seconds) {
-            const minutes = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-        
-        // تحديث شريط التقدم
-        function updateProgress() {
-            if (audio.duration) {
-                const progressPercent = (audio.currentTime / audio.duration) * 100;
-                document.getElementById('progress').style.width = `${progressPercent}%`;
-                document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
-            }
-        }
-        
-        // إنشاء تأثير التموج
-        function createMusicRipple(element) {
-            const ripple = document.createElement('div');
-            ripple.classList.add('music-ripple');
-            
-            const rect = element.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            
-            ripple.style.width = `${size}px`;
-            ripple.style.height = `${size}px`;
-            ripple.style.left = `${rect.left + rect.width/2 - size/2}px`;
-            ripple.style.top = `${rect.top + rect.height/2 - size/2}px`;
-            
-            document.body.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 1500);
-        }
-        
-        // تهيئة المشغل
-        document.addEventListener('DOMContentLoaded', function() {
-            audio = document.getElementById('myAudio');
-            
-            // تهيئة قائمة التشغيل
-            initializePlaylist();
-            
-            // تحميل الأغنية الأولى
-            loadTrack(currentTrackIndex);
-            
-            // أزرار التحكم
-            document.getElementById('playPauseBtn').addEventListener('click', function() {
-                if (isPlaying) {
-                    pauseTrack();
-                } else {
-                    playTrack();
-                }
-                createMusicRipple(this);
-            });
-            
-            document.getElementById('nextBtn').addEventListener('click', function() {
-                nextTrack();
-                createMusicRipple(this);
-            });
-            
-            document.getElementById('prevBtn').addEventListener('click', function() {
-                prevTrack();
-                createMusicRipple(this);
-            });
-            
-            document.getElementById('shuffleBtn').addEventListener('click', function() {
-                isShuffle = !isShuffle;
-                this.classList.toggle('active', isShuffle);
-                createMusicRipple(this);
-            });
-            
-            document.getElementById('repeatBtn').addEventListener('click', function() {
-                isRepeat = !isRepeat;
-                this.classList.toggle('active', isRepeat);
-                createMusicRipple(this);
-            });
-            
-            // شريط التقدم
-            document.getElementById('progressBar').addEventListener('click', function(e) {
-                const width = this.clientWidth;
-                const clickX = e.offsetX;
-                
-                if (audio.duration) {
-                    audio.currentTime = (clickX / width) * audio.duration;
-                    updateProgress();
-                }
-            });
-            
-            // التحكم في الصوت
-            document.getElementById('volumeSlider').addEventListener('input', function() {
-                const volume = this.value / 100;
-                audio.volume = volume;
-                
-                // تحديث أيقونة الصوت
-                const volumeIcons = document.querySelectorAll('.volume-control i');
-                if (volume === 0) {
-                    volumeIcons.forEach(icon => {
-                        icon.classList.remove('fa-volume-up', 'fa-volume-down');
-                        icon.classList.add('fa-volume-mute');
-                    });
-                } else if (volume < 0.5) {
-                    volumeIcons.forEach(icon => {
-                        icon.classList.remove('fa-volume-up', 'fa-volume-mute');
-                        icon.classList.add('fa-volume-down');
-                    });
-                } else {
-                    volumeIcons.forEach(icon => {
-                        icon.classList.remove('fa-volume-down', 'fa-volume-mute');
-                        icon.classList.add('fa-volume-up');
-                    });
-                }
-            });
-            
-            // تحديث شريط التقدم
-            audio.addEventListener('timeupdate', updateProgress);
-            
-            // عند انتهاء الأغنية
-            audio.addEventListener('ended', function() {
-                if (isRepeat) {
-                    audio.currentTime = 0;
-                    playTrack();
-                } else {
-                    nextTrack();
-                }
-            });
-            
-            // النجوم
-            createStars();
-            
-            // تأثيرات التمرير
-            const scrollObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('.animate-on-scroll').forEach((el, index) => {
-                scrollObserver.observe(el);
-            });
-            
-            // تأثيرات إضافية عند التحميل
-            window.addEventListener('load', () => {
-                document.querySelector('header').classList.add('animate');
-                
-                // تأثيرات متدرجة للكتل
-                document.querySelectorAll('.content-block').forEach((block, index) => {
-                    setTimeout(() => {
-                        block.classList.add('animated');
-                    }, 300 + (index * 200));
-                });
-            });
-            
-            // بدء تشغيل أول أغنية تلقائياً بعد 2 ثانية
-            setTimeout(() => {
-                playTrack();
-            }, 2000);
-        });
-        
-        // إضافة أنيميشن إضافية
-        const style = document.createElement('style');
-        style.textContent = `
-            .track-item.active {
-                background: linear-gradient(90deg, rgba(156, 39, 176, 0.1), rgba(231, 76, 60, 0.05));
-            }
-            
-            .control-btn.active {
-                background: var(--gradient-2);
-                box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
-            }
-            
-            @keyframes slideInLeft {
-                from { transform: translateX(-50px); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes pulseGlow {
-                0%, 100% { box-shadow: 0 0 10px rgba(156, 39, 176, 0.3); }
-                50% { box-shadow: 0 0 20px rgba(156, 39, 176, 0.6); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+<!-- ══════════ MUSIC ══════════ -->
+<section class="music-section reveal">
+<div class="container">
+
+  <div class="player-card">
+
+    <!-- خلفية ضبابية -->
+    <div class="player-bg" id="playerBg"></div>
+    <div class="player-overlay"></div>
+
+    <!-- المحتوى -->
+    <div style="width:100%;display:flex;flex-direction:column;">
+
+      <div class="player-body">
+
+        <!-- يمين: الفينيل -->
+        <div class="p-left">
+          <div class="vinyl-wrap">
+            <div class="vinyl-disc" id="vinylDisc"></div>
+            <div class="cover-img" id="coverImg">
+              <img src="https://k.top4top.io/p_36931n8kw1.jpg" id="coverImgEl" alt="غلاف" loading="lazy">
+            </div>
+          </div>
+          <div class="eq-bars paused" id="eqBars">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <!-- يسار: التحكم -->
+        <div class="p-right">
+
+          <div class="song-meta">
+            <div class="song-title"  id="songTitle">سيد فاقد الموسوي</div>
+            <div class="song-artist" id="songArtist">ـــــــــــــــــــ</div>
+            <div class="song-album"  id="songAlbum">حيدر يصير الوريث ♪</div>
+          </div>
+
+          <div class="prog-wrap">
+            <div class="prog-bar" id="progBar">
+              <div class="prog-fill" id="progFill"></div>
+            </div>
+            <div class="prog-times">
+              <span id="curTime">0:00</span>
+              <span id="durTime">0:00</span>
+            </div>
+          </div>
+
+          <div class="p-controls">
+            <button class="p-btn" id="prevBtn"    title="السابق">   <i class="fas fa-step-backward"></i></button>
+            <button class="p-btn" id="repeatBtn"  title="تكرار">    <i class="fas fa-redo"></i></button>
+            <button class="p-btn play" id="playBtn" title="تشغيل">  <i class="fas fa-play" id="playIco"></i></button>
+            <button class="p-btn" id="shuffleBtn" title="عشوائي">   <i class="fas fa-random"></i></button>
+            <button class="p-btn" id="nextBtn"    title="التالي">   <i class="fas fa-step-forward"></i></button>
+          </div>
+
+          <div class="vol-row">
+            <i class="fas fa-volume-down"></i>
+            <input type="range" min="0" max="100" value="70" class="vol-range" id="volSlider">
+            <i class="fas fa-volume-up"></i>
+          </div>
+
+        </div>
+      </div><!-- /player-body -->
+
+      <!-- قائمة التشغيل قابلة للطي -->
+      <div class="playlist-panel">
+        <div class="pl-head" id="plHead">
+          <i class="fas fa-music"></i>
+          قائمة التشغيل
+          <i class="fas fa-chevron-down pl-arrow"></i>
+        </div>
+        <div class="pl-body" id="plBody"></div>
+      </div>
+
+    </div>
+  </div><!-- /player-card -->
+
+</div>
+</section>
+
+<!-- SOCIAL -->
+<div class="social-section reveal">
+    <div class="container">
+        <div class="social-icons">
+            <a href="https://t.me/sppppl" target="_blank" aria-label="Telegram" class="telegram-icon">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="https://www.instagram.com/v.vri" target="_blank" aria-label="Instagram" class="instagram-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="reveal">
+    <div class="container">
+        <p>حتىٰ السين في إسمكِ تدل على السعاده .</p>
+    </div>
+</footer>
+
+<script>
+/* ══ DATA ══ */
+const tracks=[
+    {title:"سيد فاقد الموسوي",artist:"ـــــــــــــــــــ",album:"حيدر يصير الوريث ♪",
+     src:"https://k.top4top.io/m_3693rhun11.mp3",img:"https://k.top4top.io/p_36931n8kw1.jpg",dur:"4:32"},
+    {title:"باسم الكربلائي",artist:"ـــــــــــــــــــ",album:"ماعندي غير الله ♪",
+     src:"https://k.top4top.io/m_3691qbw9n1.mp3",img:"https://i.top4top.io/p_3693jijcz1.jpg",dur:"5:15"},
+    {title:"سيد فاقد الموسوي",artist:"ـــــــــــــــــــ",album:"لا مسحتو جروح كلبي ♪",
+     src:"https://d.top4top.io/m_3693c0q161.m4a",img:"https://f.top4top.io/p_3693aotoz1.jpg",dur:"6:20"}
+];
+
+let cur=0,playing=false,shuffle=false,repeat=false,audio;
+const $=id=>document.getElementById(id);
+const fmt=s=>{const m=Math.floor(s/60),sc=Math.floor(s%60);return`${m}:${sc<10?'0':''}${sc}`;};
+
+/* ══ PLAYLIST ══ */
+function buildPL(){
+    const b=$('plBody');b.innerHTML='';
+    tracks.forEach((t,i)=>{
+        const el=document.createElement('div');
+        el.className=`pl-item${i===cur?' active':''}`;
+        el.innerHTML=`
+            <div class="pl-num">${i+1}</div>
+            <div class="pl-thumb"><img src="${t.img}" loading="lazy"></div>
+            <div class="pl-info"><h4>${t.title}</h4><p>${t.artist}</p></div>
+            <div class="pl-dur">${t.dur}</div>`;
+        el.onclick=()=>{cur=i;load(i);go();};
+        b.appendChild(el);
+    });
+}
+function syncPL(){document.querySelectorAll('.pl-item').forEach((el,i)=>el.classList.toggle('active',i===cur));}
+
+/* ══ LOAD ══ */
+function load(i){
+    const t=tracks[i];
+    audio.src=t.src;
+    $('songTitle').textContent =t.title;
+    $('songArtist').textContent=t.artist;
+    $('songAlbum').textContent =t.album;
+    $('coverImgEl').src        =t.img;
+    $('playerBg').style.backgroundImage=`url('${t.img}')`;
+    $('progFill').style.width  ='0%';
+    $('curTime').textContent   ='0:00';
+    $('durTime').textContent   =t.dur;
+    syncPL();
+}
+
+/* ══ PLAY / PAUSE ══ */
+function go(){
+    audio.play().catch(()=>{});
+    playing=true;
+    $('playIco').className='fas fa-pause';
+    $('vinylDisc').classList.add('spinning');
+    $('coverImg').classList.add('spinning');
+    $('eqBars').classList.remove('paused');
+}
+function stop(){
+    audio.pause();playing=false;
+    $('playIco').className='fas fa-play';
+    $('vinylDisc').classList.remove('spinning');
+    $('coverImg').classList.remove('spinning');
+    $('eqBars').classList.add('paused');
+}
+function nxt(){cur=shuffle?Math.floor(Math.random()*tracks.length):(cur+1)%tracks.length;load(cur);go();}
+function prv(){cur=shuffle?Math.floor(Math.random()*tracks.length):(cur-1+tracks.length)%tracks.length;load(cur);go();}
+
+/* ══ INIT ══ */
+document.addEventListener('DOMContentLoaded',()=>{
+    audio=$('myAudio');audio.volume=.7;
+    buildPL();load(cur);
+
+    $('playBtn').onclick=()=>playing?stop():go();
+    $('nextBtn').onclick=nxt;
+    $('prevBtn').onclick=prv;
+    $('shuffleBtn').onclick=function(){shuffle=!shuffle;this.classList.toggle('on',shuffle);};
+    $('repeatBtn').onclick=function(){repeat=!repeat;this.classList.toggle('on',repeat);};
+
+    $('progBar').addEventListener('click',function(e){
+        if(audio.duration)audio.currentTime=(e.offsetX/this.clientWidth)*audio.duration;
+    });
+    $('volSlider').addEventListener('input',function(){audio.volume=this.value/100;});
+
+    audio.addEventListener('timeupdate',()=>{
+        if(!audio.duration)return;
+        $('progFill').style.width=((audio.currentTime/audio.duration)*100)+'%';
+        $('curTime').textContent=fmt(audio.currentTime);
+    });
+    audio.addEventListener('loadedmetadata',()=>$('durTime').textContent=fmt(audio.duration));
+    audio.addEventListener('ended',()=>{if(repeat){audio.currentTime=0;go();}else nxt();});
+
+    /* playlist toggle */
+    $('plHead').addEventListener('click',function(){
+        this.classList.toggle('open');
+        $('plBody').classList.toggle('open');
+    });
+
+    /* auto-play on first interaction */
+    const kick=()=>{if(!playing)go();document.removeEventListener('click',kick);document.removeEventListener('touchstart',kick);};
+    document.addEventListener('click',kick);
+    document.addEventListener('touchstart',kick);
+
+    /* scroll reveal */
+    const io=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
+});
+</script>
 </body>
 </html>
+
