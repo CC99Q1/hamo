@@ -2,567 +2,511 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="https://i.top4top.io/p_3691du0f31.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ܩߺܒߺܩߺߺݏࡉ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: rgba(20, 20, 20, 0.8);
+            --accent-gold: #d4af37;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --transition-dynamic: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            min-height: 100vh;
-            font-family: 'Arial', sans-serif;
-            position: relative;
-            background: #000;
-            touch-action: pan-y pinch-zoom;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
-        /* خلفية الفيديو مع أنميشن */
-        #background-media {
+        .background-animation {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            animation: backgroundZoom 20s ease-in-out infinite alternate;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
         }
 
-        @keyframes backgroundZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        /* طبقة التغميق مع أنميشن */
-        .dark-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 0;
-            animation: overlayPulse 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes overlayPulse {
-            0% { background: rgba(0, 0, 0, 0.4); }
-            100% { background: rgba(0, 0, 0, 0.6); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .hero {
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            position: relative;
         }
 
-        /* البطاقة - أنميشن دخول قوي */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            border-radius: 50px;
-            padding: 25px 20px;
-            width: 100%;
-            max-width: 580px;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
-            border: 3px solid white;
-            animation: cardFloatIn 1s cubic-bezier(0.23, 1, 0.32, 1) forwards, cardGlow 3s ease-in-out infinite alternate;
-            transform-origin: center;
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
         }
 
-        @keyframes cardFloatIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateY(50px) rotate(-2deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0) rotate(0);
-            }
-        }
-
-        @keyframes cardGlow {
-            0% { box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5); }
-            100% { box-shadow: 0 40px 70px rgba(196, 155, 31, 0.4); }
-        }
-
-        /* الميديا بوكس مع أنميشن */
-        .media-box {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #f0f0f0;
-            border-radius: 35px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 3px solid white;
-            cursor: pointer;
-            animation: mediaSlideIn 1.2s ease-out 0.3s forwards, mediaPulse 4s ease-in-out 1s infinite;
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            animation: slideUp 1s ease forwards;
             opacity: 0;
-            transform: translateX(-30px);
+            transform: translateY(30px);
         }
 
-        @keyframes mediaSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .hero-title span {
+            color: var(--accent-gold);
         }
 
-        @keyframes mediaPulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        .typing-text {
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            height: 40px;
         }
 
-        .media-box img,
-        .media-box video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s;
-            animation: mediaZoom 15s ease-in-out infinite alternate;
+        .glow-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: var(--transition-dynamic);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
         }
 
-        @keyframes mediaZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        .media-box:hover img,
-        .media-box:hover video {
+        .glow-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px var(--accent-gold);
             transform: scale(1.05);
         }
 
-        /* النص السفلي */
-        .bottom-text {
+        .hero-image {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            border: 4px solid var(--accent-gold);
+            object-fit: cover;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+            animation: float 6s ease-in-out infinite, fadeIn 1s ease 0.5s forwards;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .section-title {
             text-align: center;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            color: var(--text-main);
         }
 
-        /* الجملة الرئيسية - سطر واحد مع أنميشن شامل */
-        .main-text {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: #1a1a1a;
-            line-height: 1.4;
-            display: block;
-            font-family: 'Arial', 'Helvetica', sans-serif;
-            letter-spacing: 0.5px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            padding: 0 10px;
-            margin-bottom: 8px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 12px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            animation: textReveal 2s ease-out forwards, textShimmer 3s ease-in-out 2s infinite, textWave 5s ease-in-out infinite;
-            transform-origin: right;
+        .section-title span {
+            color: var(--accent-gold);
         }
 
-        @keyframes textReveal {
-            0% {
-                opacity: 0;
-                transform: translateX(50px) skewX(10deg);
-                letter-spacing: 10px;
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0) skewX(0);
-                letter-spacing: 0.5px;
-            }
+        .container {
+            padding: 6rem 10%;
         }
 
-        @keyframes textShimmer {
-            0% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-            50% { text-shadow: 4px 4px 8px rgba(196, 155, 31, 0.4); }
-            100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
-        }
-
-        @keyframes textWave {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-2px); }
-        }
-
-        /* تنسيق اليدل مع أنميشن */
-        .handle-text {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #c49b1f;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            direction: ltr;
-            margin-top: 12px;
-            letter-spacing: 0.5px;
-            animation: handleRotateIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s forwards, handleColorShift 4s ease-in-out infinite;
-            opacity: 0;
-            transform: scale(0) rotate(-180deg);
-        }
-
-        @keyframes handleRotateIn {
-            0% {
-                opacity: 0;
-                transform: scale(0) rotate(-180deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
-        }
-
-        @keyframes handleColorShift {
-            0%, 100% { color: #c49b1f; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-            50% { color: #e6b422; text-shadow: 0 0 10px #e6b422, 2px 2px 4px rgba(0,0,0,0.2); }
-        }
-
-        .handle-text a {
-            color: inherit;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-            animation: linkBounce 3s ease-in-out infinite;
-        }
-
-        @keyframes linkBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .handle-text a::before {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #e6b422, transparent);
-            animation: lineFlow 2s linear infinite;
-        }
-
-        @keyframes lineFlow {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* أيقونات التواصل - أنميشن متكامل */
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 25px;
-            margin-bottom: 5px;
-        }
-
-        .telegram-icon {
-            width: 55px;
-            height: 55px;
-            background: #0088cc;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            animation: iconPopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards, iconDance 5s ease-in-out 1.8s infinite, iconGlow 2s ease-in-out infinite alternate;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        .instagram-icon {
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle at 30% 110%, #ffd600, #ff7a00, #d3008a, #9300c4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            animation: iconPopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.4s forwards, iconDance 5s ease-in-out 2s infinite, iconGlow 2s ease-in-out 0.5s infinite alternate;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        @keyframes iconPopIn {
-            0% {
-                opacity: 0;
-                transform: translateY(50px) scale(0.5);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes iconDance {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(5deg) scale(1.1); }
-            75% { transform: rotate(-5deg) scale(1.1); }
-        }
-
-        @keyframes iconGlow {
-            0% { box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
-            100% { box-shadow: 0 8px 20px rgba(196, 155, 31, 0.6); }
-        }
-
-        .telegram-icon:hover,
-        .instagram-icon:hover {
-            animation: none;
-            transform: scale(1.2) rotate(360deg);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .telegram-icon svg,
-        .instagram-icon svg {
-            width: 30px;
-            height: 30px;
-            fill: white;
-            animation: iconSpin 10s linear infinite;
-        }
-
-        @keyframes iconSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .telegram-icon:hover svg,
-        .instagram-icon:hover svg {
-            animation: none;
-        }
-
-        /* Modal مع أنميشن */
-        .media-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
+        #projects {
             display: none;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            animation: modalFadeIn 0.5s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                backdrop-filter: blur(0);
-            }
-            to {
-                opacity: 1;
-                backdrop-filter: blur(10px);
-            }
+        #projects.reveal-active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            animation: modalZoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
         }
 
-        @keyframes modalZoomIn {
-            from {
-                transform: scale(0.3) rotate(-10deg);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) rotate(0);
-                opacity: 1;
-            }
+        .about-container {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .modal-content img,
-        .modal-content video {
-            max-width: 100%;
-            max-height: 90vh;
-            border: 3px solid white;
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 3rem 2rem;
             border-radius: 20px;
-            animation: modalContentPulse 2s ease-in-out infinite alternate;
+            text-align: center;
+            transition: var(--transition-dynamic);
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes modalContentPulse {
-            from { border-color: white; }
-            to { border-color: #c49b1f; }
+        .glass-card.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
-        /* تحسين للشاشات الصغيرة */
-        @media (max-width: 480px) {
-            .main-text {
-                font-size: 1.4rem;
-                white-space: normal;
-                display: -webkit-box;
-                -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
+        .glass-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-dynamic);
+            animation: iconPulse 3s infinite ease-in-out;
+        }
+        
+        .glass-card:hover .card-icon {
+            transform: scale(1.1);
+        }
+
+        .glass-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .quote-text {
+            color: #e2e8f0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            line-height: 2;
+            font-style: italic;
+            position: relative;
+            padding: 0 1rem;
+        }
+
+        .quote-text::before, .quote-text::after {
+            content: '"';
+            color: var(--accent-gold);
+            font-size: 2rem;
+            font-family: 'Georgia', serif;
+            vertical-align: middle;
+            line-height: 0;
+        }
+
+        .glass-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .bot-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition-dynamic);
+        }
+
+        .bot-btn:hover {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--accent-gold);
+        }
+
+        .contact-footer {
+            background: rgba(15, 15, 15, 0.9);
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 4rem 10% 2rem 10%;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        .contact-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+        }
+
+        .contact-title span {
+            color: var(--accent-gold);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            color: var(--text-main);
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: var(--transition-dynamic);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-8px) scale(1.1);
+            color: var(--bg-dark);
+            border-color: var(--accent-gold);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .social-icon.telegram:hover { background: #0088cc; border-color: #0088cc; box-shadow: 0 10px 20px rgba(0, 136, 204, 0.4); }
+        .social-icon.instagram:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border-color: transparent; box-shadow: 0 10px 20px rgba(204, 35, 102, 0.4); }
+        .social-icon.email:hover { background: #ea4335; border-color: #ea4335; box-shadow: 0 10px 20px rgba(234, 67, 53, 0.4); }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1.5rem;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-25px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
-            .handle-text {
-                font-size: 1.2rem;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                justify-content: center;
+                padding-top: 7rem;
+            }
+            .hero-image {
+                width: 280px;
+                height: 280px;
+                margin-bottom: 3rem;
+            }
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .container {
+                padding: 4rem 5%;
+            }
+            .social-links {
+                gap: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- عنصر الخلفية -->
-    <div id="background-container"></div>
-    
-    <!-- طبقة التغميق -->
-    <div class="dark-overlay"></div>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="container">
-        <div class="card">
-            <div class="media-box" id="thumbnailBox">
-                <img id="thumbnailImage" src="" alt="thumbnail" style="display: none;">
-            </div>
-            
-            <div class="bottom-text">
-                <!-- النص الكامل في سطر واحد مع أنميشن شامل -->
-                <span class="main-text" title="أشعُر بالكثير لكني لن أتحَدث كالعادة .">أشعُر بالكثير لكني لن أتحَدث كالعادة .</span>
-                
-                <div class="handle-text">
-                    <a href="https://t.me/vvu_vvv" target="_blank">مأساة أن تملك ، عقل لا يهدأ .</a>
-                </div>
-                
-                <div class="social-icons">
-                    <!-- تليجرام -->
-                    <a href="https://t.me/oo66o" target="_blank" class="telegram-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.04-.48-.82-.27-1.47-.42-1.42-.88.03-.24.27-.48.74-.74 2.88-1.25 4.8-2.08 5.75-2.5 2.74-1.15 3.31-1.35 3.68-1.35.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
-                        </svg>
-                    </a>
-                    
-                    <!-- انستغرام -->
-                    <a href="https://instagram.com/v.vri" target="_blank" class="instagram-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.248.637.415 1.363.465 2.428.05 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.217 1.79-.465 2.428-.254.66-.598 1.216-1.153 1.772-.5.509-1.105.902-1.772 1.153-.637.248-1.363.415-2.428.465-1.066.05-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.217-2.428-.465-.66-.254-1.216-.598-1.772-1.153-.509-.5-.902-1.105-1.153-1.772-.248-.637-.415-1.363-.465-2.428-.05-1.066-.06-1.405-.06-4.122 0-2.717.01-3.056.06-4.122.05-1.065.217-1.79.465-2.428.254-.66.598-1.216 1.153-1.772.5-.509 1.105-.902 1.772-1.153.637-.248 1.363-.415 2.428-.465C8.944 2.01 9.283 2 12 2zm0 5c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm6.5-.25c0-.69-.56-1.25-1.25-1.25s-1.25.56-1.25 1.25.56 1.25 1.25 1.25 1.25-.56 1.25-1.25zM12 9c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/>
-                        </svg>
-                    </a>
-                </div>
+    <div class="background-animation"></div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title"<span>ܩߺܒߺܩߺߺݏࡉ</span></h1>
+            <div class="typing-text" id="typing-element"></div>
+            <p style="color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.2rem; line-height: 1.9;">
+                عالق بين شعورين شعور الرغبة في العيش وعدم الإستسلام مصاعب الحياة
+ وشعور الإحباط بأنك لا تنتمي إلى هذا المكان، ولن تنتمي له..
+            </p>
+            <button onclick="toggleMyProjects()" id="action-btn" class="glow-btn">تصفح أبرز أعمالي</button>
+        </div>
+        
+        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="صورة محمد" class="hero-image">
+    </section>
+
+    <section class="container" id="skills">
+        <div class="about-container">
+            <div class="glass-card animate-on-scroll">
+                <i class="fa-solid fa-crown card-icon"></i>
+                <h3>ܩߺܒߺܩߺߺݏࡉ</h3>
+                <p class="quote-text">يؤسفني أنك ستعيش بقية حياتك أنت.. وهذا بحد ذاته عقاب كافي.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Modal -->
-    <div class="media-modal" id="mediaModal" onclick="this.style.display='none'">
-        <div class="modal-content" id="modalContent"></div>
-    </div>
+    <section class="container" id="projects">
+        <h2 class="section-title">أبرز <span>المشاريع</span></h2>
+        <div class="grid-container">
+            
+            <div class="glass-card">
+                <i class="fa-solid fa-robot card-icon"></i>
+                <h3>بوت تحميل ستوريات تلجرام</h3>
+                <p>برمجة وتطوير بوت تيليجرام مخصص لاستخراج وتحميل القصص، مع القدرة على تخطي القيود والتعامل مع الطلبات الكثيفة بكفاءة.</p>
+                <a href="https://t.me/K1Kkkbot" target="_blank" class="bot-btn">
+                    تجرِبة البوت <i class="fa-brands fa-telegram"></i>
+                </a>
+            </div>
+
+            <div class="glass-card">
+                <i class="fa-solid fa-file-audio card-icon"></i>
+                <h3>بوت تحويل فيديو إلى صوت</h3>
+                <p>بوت تيليجرام مخصص لاستخراج الصوت من الفيديو، مع تعديل حقوق الملفات الصوتية و الكثير من المميزات المفيدة.</p>
+                <a href="https://t.me/cccc1bot" target="_blank" class="bot-btn">
+                    تجرِبة البوت <i class="fa-brands fa-telegram"></i>
+                </a>
+            </div>
+            
+        </div>
+    </section>
+
+    <footer class="contact-footer">
+        <h3 class="contact-title">تواصل <span>معي</span></h3>
+        <div class="social-links">
+            <a href="https://t.me/oo66o" target="_blank" class="social-icon telegram" title="تيليجرام">
+                <i class="fa-brands fa-telegram"></i>
+            </a>
+            <a href="https://instagram.com/v.vri" target="_blank" class="social-icon instagram" title="انستغرام">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="mailto:mo0783030@gmail.com" class="social-icon email" title="البريد الإلكتروني">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+        <div class="copyright">
+             جميع الحقوق محفوظة &copy; 2026 | ܩߺܒߺܩߺߺݏࡉ
+        </div>
+    </footer>
 
     <script>
-        // روابط الوسائط
-        const backgroundUrl = 'https://g.top4top.io/m_3732n9vm01.mp4';
-        const thumbnailUrl = 'https://g.top4top.io/m_3728hddaq1.mp4';
-        const fullMediaUrl = 'https://g.top4top.io/m_3728hddaq1.mp4';
-        
-        function setBackground(url) {
-            const container = document.getElementById('background-container');
-            container.innerHTML = '';
-            const isVideo = url.match(/\.(mp4|webm|ogg|mov|avi)$/i) || url.includes('video');
+        const texts = ["ما اتعب نفسي بالمعاملة بالمثل", "أنا أنهي التعامل نهائيًا."];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        try {
+            (function type() {
+                if (count === texts.length) {
+                    count = 0;
+                }
+                currentText = texts[count];
+                letter = currentText.slice(0, ++index);
+
+                const element = document.getElementById('typing-element');
+                if(element) {
+                    element.textContent = letter;
+                }
+                if (letter.length === currentText.length) {
+                    count++;
+                    index = 0;
+                    setTimeout(type, 1500);
+                } else {
+                    setTimeout(type, 80);
+                }
+            }());
+        } catch(e) { console.log(e); }
+
+        function toggleMyProjects() {
+            const projectsSection = document.getElementById('projects');
+            const actionBtn = document.getElementById('action-btn');
+            const cards = projectsSection.querySelectorAll('.glass-card');
             
-            if (isVideo) {
-                const video = document.createElement('video');
-                video.id = 'background-media';
-                video.src = url;
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = true;
-                video.playsInline = true;
-                video.style.position = 'fixed';
-                video.style.top = '0';
-                video.style.left = '0';
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'cover';
-                video.style.zIndex = '-1';
-                container.appendChild(video);
+            if (projectsSection.style.display === 'block') {
+                cards.forEach((card) => {
+                    card.classList.remove('show');
+                });
+                projectsSection.style.opacity = '0';
+                setTimeout(() => {
+                    projectsSection.style.display = 'none';
+                    projectsSection.classList.remove('reveal-active');
+                }, 400);
+                actionBtn.textContent = "تصفح أبرز أعمالي";
+                document.getElementById('skills').scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
-                document.body.style.background = `url('${url}') no-repeat center center / cover`;
-                document.body.style.backgroundAttachment = 'fixed';
+                projectsSection.style.display = 'block';
+                setTimeout(() => {
+                    projectsSection.classList.add('reveal-active');
+                    projectsSection.style.opacity = '1';
+                    cards.forEach((card, idx) => {
+                        setTimeout(() => {
+                            card.classList.add('show');
+                        }, idx * 100);
+                    });
+                }, 50);
+                actionBtn.textContent = "إخفاء أبرز أعمالي";
+                setTimeout(() => {
+                    projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
             }
         }
 
-        function setThumbnail(url) {
-            const box = document.getElementById('thumbnailBox');
-            box.innerHTML = '';
-            const isVideo = url.match(/\.(mp4|webm|ogg|mov|avi)$/i) || url.includes('video');
+        document.addEventListener("DOMContentLoaded", function() {
+            const hiddenElements = document.querySelectorAll('#skills .animate-on-scroll');
             
-            if (isVideo) {
-                const video = document.createElement('video');
-                video.src = url;
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = true;
-                video.playsInline = true;
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'cover';
-                box.appendChild(video);
-            } else {
-                const img = document.createElement('img');
-                img.src = url;
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'cover';
-                box.appendChild(img);
-            }
-        }
+            const observerOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px 0px -20px 0px"
+            };
 
-        document.getElementById('thumbnailBox').addEventListener('click', function() {
-            const modal = document.getElementById('mediaModal');
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = '';
-            
-            const isVideo = fullMediaUrl.match(/\.(mp4|webm|ogg|mov|avi)$/i) || fullMediaUrl.includes('video');
-            
-            if (isVideo) {
-                const video = document.createElement('video');
-                video.src = fullMediaUrl;
-                video.controls = true;
-                video.autoplay = true;
-                video.style.maxWidth = '100%';
-                video.style.maxHeight = '90vh';
-                modalContent.appendChild(video);
-            } else {
-                const img = document.createElement('img');
-                img.src = fullMediaUrl;
-                img.style.maxWidth = '100%';
-                img.style.maxHeight = '90vh';
-                modalContent.appendChild(img);
-            }
-            modal.style.display = 'flex';
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            hiddenElements.forEach((el, index) => {
+                observer.observe(el);
+                el.style.transitionDelay = `${index * 0.12}s`; 
+                setTimeout(() => {
+                    el.classList.add('show');
+                }, 1000);
+            });
         });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.getElementById('mediaModal').style.display = 'none';
-            }
-        });
-
-        window.onload = function() {
-            setBackground(backgroundUrl);
-            setThumbnail(thumbnailUrl);
-            
-            // إضافة كلاس إضافي للأنميشن
-            document.body.classList.add('animations-loaded');
-        };
     </script>
 </body>
 </html>
